@@ -28,6 +28,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+const contactRouter = require('./routes/contact');
+app.use('/', contactRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

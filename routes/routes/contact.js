@@ -2,42 +2,39 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-// GET contact page
+// Display contact page
 router.get('/', (req, res) => {
-  res.render('contact', { title: 'Contact', message: null });
+  res.render('contact', { title: 'Contact', message: '' });
 });
 
-// POST route for sending emails
-router.post('/', async (req, res) => {
+// Handle form submission
+router.post('/send', (req, res) => {
   const { name, email, message } = req.body;
 
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
-      },
-    });
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    }
+  });
 
-    await transporter.sendMail({
-      from: email,
-      to: process.env.GMAIL_USER,
-      subject: `New message from ${name}`,
-      text: `Email: ${email}\n\nMessage:\n${message}`,
-    });
+  const mailOptions = {
+    from: email,
+    to: process.env.GMAIL_USER,
+    subject: `Message from ${name}`,
+    text: message
+  };
 
-    res.render('contact', {
-      title: 'Contact',
-      message: '✅ Your message was sent successfully!',
-    });
-  } catch (err) {
-    console.error(err);
-    res.render('contact', {
-      title: 'Contact',
-      message: '❌ Message failed to send. Please try again later.',
-    });
-  }
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.render('contact', { title: 'Contact', message: 'Error sending message 😢. Try again later.' });
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.render('contact', { title: 'Contact', message: '✅ Message sent successfully!' });
+    }
+  });
 });
 
 module.exports = router;
