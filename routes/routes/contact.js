@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-// GET route to show the form
+// GET contact page
 router.get('/', (req, res) => {
-  res.render('contact', { message: null });
+  res.render('contact', { title: 'Contact', message: null });
 });
 
-// POST route to handle form submit
+// POST route for sending emails
 router.post('/', async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -27,10 +27,16 @@ router.post('/', async (req, res) => {
       text: `Email: ${email}\n\nMessage:\n${message}`,
     });
 
-    res.render('contact', { message: '✅ Your message was sent successfully!' });
+    res.render('contact', {
+      title: 'Contact',
+      message: '✅ Your message was sent successfully!',
+    });
   } catch (err) {
     console.error(err);
-    res.render('contact', { message: '❌ Message failed. Please try again later.' });
+    res.render('contact', {
+      title: 'Contact',
+      message: '❌ Message failed to send. Please try again later.',
+    });
   }
 });
 
