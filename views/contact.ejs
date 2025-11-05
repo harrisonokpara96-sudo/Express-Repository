@@ -6,14 +6,17 @@
       <div class="underline"></div>
       <p>Don’t miss to contact me for more information — kindly fill the form below.</p>
 
-      <form action="#" method="POST" class="contact-form">
-        <input type="text" name="name" placeholder="First & Last Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">
-          <i class="fas fa-paper-plane"></i> SEND
-        </button>
-      </form>
+    <form action="/contact" method="POST" class="contact-form">
+  <input type="text" name="name" placeholder="First & Last Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" placeholder="Your Message" required></textarea>
+  <button type="submit">SEND</button>
+</form>
+
+<% if (typeof message !== 'undefined') { %>
+  <p style="text-align:center; color:#007bff;"><%= message %></p>
+<% } %>
+
     </div>
   </section>
 
@@ -41,6 +44,7 @@
           <a href="https://docs.google.com/document/d/1_nWwcIxSiZwGrli6JmIoIxk3cY0stn7HPPO4esfrLtE/edit?usp=sharing">ERPsim Business Simulation Dashboard</a>
           <a href="/about">Chemical Movie Poster Project</a>
           <div class="footer-column"></div>
+          <div class="footer-bottom">Email: ozichi.okpara@ontariotechu.net</div>
           <div class="social-icons">
             <a href="https://github.com/harrisonokpara96-sudo/Express-Repository"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/ozichi-okpara-469529188/"><i class="fab fa-linkedin"></i></a>
@@ -51,4 +55,5 @@
     </div>
   </section>
 </main>
+
 

@@ -49,3 +49,13 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+const express = require('express');
+const path = require('path');
+const contactRouter = require('./routes/contact');
+const app = express();
+
+// Middleware to read form data
+app.use(express.urlencoded({ extended: true }));
+
+// Use routes
+app.use('/contact', contactRouter);
