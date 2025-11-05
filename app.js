@@ -1,58 +1,51 @@
-// Required dependencies
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var expressLayouts = require('express-ejs-layouts'); // ✅ enable layout support
+// app.js
 
-// Route imports
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const createError = require('http-errors');
+const expressLayouts = require('express-ejs-layouts');
 
-// Initialize Express app
-var app = express();
+const app = express();
 
-// ✅ View engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(expressLayouts);            // enable EJS layouts
-app.set('layout', 'layout');        // default layout file (views/layout.ejs)
+app.use(expressLayouts);
 
 // Middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Serve static files (CSS, images, JS)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Routes
+// Routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// ✅ 404 handler
-app.use(function (req, res, next) {
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// ✅ Error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+// Error handler
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
 
-// Export app
+// ✅ Dynamic Port for Render
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
+
 module.exports = app;
-const express = require('express');
-const app = express();
-const path = require('path');
-
-app.use(express.static('public')); // <--- this line!
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
