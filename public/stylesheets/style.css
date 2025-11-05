@@ -461,3 +461,71 @@ main {
 .project-link:hover {
   text-decoration: underline;
 }
+/* --- FIX FOOTER TO BOTTOM ON ABOUT PAGE --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Keep your footer style consistent */
+.footer,
+.contact-footer-info {
+  margin-top: auto;
+}
+/* --- FIX FOOTER TO BOTTOM OF SCREEN ON ABOUT PAGE --- */
+html, body {
+  height: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.footer,
+.contact-footer-info {
+  flex-shrink: 0;
+  margin-top: auto;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+.about-images {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+  flex-wrap: wrap; /* helps stack on smaller screens */
+}
+
+.about-img {
+  width: 45%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.about-img:hover {
+  transform: scale(1.05);
+}
+
+/* make it responsive */
+@media (max-width: 768px) {
+  .about-img {
+    width: 100%;
+  }
+}
+

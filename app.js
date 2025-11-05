@@ -48,3 +48,11 @@ app.use(function (err, req, res, next) {
 
 // Export app
 module.exports = app;
+const express = require('express');
+const app = express();
+const path = require('path');
+
+app.use(express.static('public')); // <--- this line!
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
