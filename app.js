@@ -51,11 +51,25 @@ app.listen(PORT, () => {
 module.exports = app;
 const express = require('express');
 const path = require('path');
-const contactRouter = require('./routes/contact');
 const app = express();
 
-// Middleware to read form data
-app.use(express.urlencoded({ extended: true }));
+// View engine setup
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Use routes
+// Middleware for form data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ROUTES
+const contactRouter = require('./routes/contact');
 app.use('/contact', contactRouter);
+
+// Homepage route (example)
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+// Server listen
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
